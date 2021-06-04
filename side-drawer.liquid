@@ -1,0 +1,23 @@
+{% for creator in linklists.creators.links %}{% assign creatorname = creator.title | handle %}
+{% if creator.active or page.url contains creatorname or collection.url contains creatorname %}
+{% assign brandmenu = false %}{% for link in linklists[creatorname].links %}{% if link.active %}{% assign brandmenu = true %}{% endif %}{% endfor %}
+{% if brandmenu == true %}
+{{ 'codehouse-menu.css' | asset_url | stylesheet_tag }}
+<div class="codehouse-menu-wrap bg-{{creatorname}}">
+  <input type="checkbox" class="toggler" />
+  <div class="hamburger">
+    <div></div>
+  </div>
+  <div class="codehouse-menu">
+    <div>
+      <ul>
+        {% for link in linklists[creatorname].links %}
+        <li{% if link.active %} class="active"{% endif %}><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+{% endfor %}
